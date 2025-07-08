@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelacak Pesanan Modern (FSA & Data)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1><i class="fas fa-shipping-fast"></i> Pelacak Pesanan</h1>
+            <p>Sistem manajemen status pesanan dengan Finite State Automata.</p>
+        </header>
+
+        <div id="notification" class="notification" style="display: none;">
+            <span id="notificationMessage"></span>
+            <button class="close-notification-btn" onclick="hideNotification()">&times;</button>
+        </div>
+
+        <div class="dashboard-section card">
+            <h2>Ringkasan Status</h2>
+            <div class="status-summary-grid">
+                <div class="summary-item pending">
+                    <h3>Menunggu</h3>
+                    <p id="summaryPending">0</p>
+                </div>
+                <div class="summary-item processing">
+                    <h3>Diproses</h3>
+                    <p id="summaryProcessing">0</p>
+                </div>
+                <div class="summary-item shipped">
+                    <h3>Terkirim</h3>
+                    <p id="summaryShipped">0</p>
+                </div>
+                <div class="summary-item delivered">
+                    <h3>Selesai</h3>
+                    <p id="summaryDelivered">0</p>
+                </div>
+                <div class="summary-item cancelled">
+                    <h3>Dibatalkan</h3>
+                    <p id="summaryCancelled">0</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section card">
+            <h2><i class="fas fa-plus-circle"></i> Tambah / Edit Pesanan</h2>
+            <form id="orderForm">
+                <input type="hidden" id="orderId" value="">
+
+                <div class="form-group">
+                    <label for="itemName">Nama Barang/Pesanan:</label>
+                    <input type="text" id="itemName" required placeholder="Contoh: Laptop Gaming">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" id="submitBtn"><i class="fas fa-save"></i> Simpan Pesanan</button>
+                    <button type="button" id="cancelEditBtn" class="secondary-btn" style="display: none;"><i class="fas fa-times-circle"></i> Batal Edit</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="list-section card">
+            <h2><i class="fas fa-clipboard-list"></i> Daftar Pesanan</h2>
+            <div class="controls-bar">
+                <input type="text" id="searchInput" placeholder="Cari nama atau ID pesanan..." class="search-input">
+                <select id="filterByStatus" class="filter-select">
+                    <option value="all">Semua Status</option>
+                    <option value="PENDING">Menunggu</option>
+                    <option value="PROCESSING">Diproses</option>
+                    <option value="SHIPPED">Terkirim</option>
+                    <option value="DELIVERED">Selesai</option>
+                    <option value="CANCELLED">Dibatalkan</option>
+                </select>
+            </div>
+            
+            <p id="noOrdersMessage" class="info-message" style="display: none;"><i class="fas fa-info-circle"></i> Belum ada pesanan yang tercatat.</p>
+            
+            <div class="table-responsive">
+                <table id="orderTable">
+                    <thead>
+                        <tr>
+                            <th>ID Pesanan</th>
+                            <th>Nama Barang</th>
+                            <th>Tanggal Pesan</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="utility-actions">
+                <button id="clearAllOrdersBtn" class="danger-btn"><i class="fas fa-trash-alt"></i> Hapus Semua Pesanan</button>
+                <button id="exportDataBtn" class="utility-btn"><i class="fas fa-file-export"></i> Ekspor Data (JSON)</button>
+                <label for="importFileInput" class="utility-btn import-label"><i class="fas fa-file-import"></i> Impor Data (JSON)</label>
+                <input type="file" id="importFileInput" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
